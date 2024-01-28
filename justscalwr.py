@@ -45,20 +45,20 @@ def model_selector(scale: str) -> str:
     model = ''
     if scale == '2x':
         model = st.selectbox(
-            'Which model do you want to use?',
+            'Какую модель вы хотите использовать?',
             ('Not selected', models_2x[0], models_2x[1], models_2x[2], models_2x[3],
              models_2x[4]))
     elif scale == '3x':
         model = st.selectbox(
-            'Which model do you want to use?',
+            'Какую модель вы хотите использовать?',
             ('Not selected', models_3x[0], models_3x[1], models_3x[2], models_3x[3]))
     elif scale == '4x':
         model = st.selectbox(
-            'Which model do you want to use?',
+            'Какую модель вы хотите использовать?',
             ('Not selected', models_4x[0], models_4x[1], models_4x[2], models_4x[3], models_4x[4]))
     elif scale == '8x':
         model = st.selectbox(
-            'Which model do you want to use?',
+            'Какую модель вы хотите использовать?',
             ('Not selected', models_8x[0]))
     else:
         return False, False
@@ -66,25 +66,20 @@ def model_selector(scale: str) -> str:
     model_name = get_modelname(model)
     return model, model_name
 
-
-############################# start - Streamlit ################################
-
-st.title('Free Image Upscaler Using Deep Learning 📸')
+st.title('Upscaler изображений с использованием технологий глубокого обучения❌☠')
 st.markdown(
-    'By [Mehrdad Mohammadian](https://mehrdad-dev.github.io)', unsafe_allow_html=True)
+    'By [ZIRAKAMI](https://github.com/zirakami)', unsafe_allow_html=True)
 
 about = """
-This demo provides a simple interface to upscale your images using deep learning (AI). 
-In streamlit, there is a shortage in terms of CPU, to solve this issue use codes in 
-GitHub on your own device or use another scale twice.
+Эта демонстрация предоставляет простой интерфейс для увеличения масштаба ваших изображений с помощью глубокого обучения (AI). 
 
 
-**Note:** If you see a error like "Oh, no - Error running app", it is because CPU shortage in streamlit.
+**Note:** Если вы видите ошибку типа "Если вы видите ошибку типа "О, приложение запущено без ошибок", это связано с нехваткой процессора в streamlit.", это связано с нехваткой процессора в streamlit.
 """
 st.markdown(about, unsafe_allow_html=True)
 
 scale = st.selectbox(
-    'Which scale do you want to apply to your image?',
+    'Какой масштаб вы хотите применить к своему изображению?',
     ('Not selected', '2x', '3x', '4x', '8x'))
 
 
@@ -92,7 +87,7 @@ uploaded_file = None
 model, model_name = model_selector(scale)
 if model and model != 'Not selected':
     model_path = BASE_PATH + scale + '/' + model
-    uploaded_file = st.file_uploader("Upload a jpg image", type=["jpg", "png"])
+    uploaded_file = st.file_uploader("Загрузите изображение в формате jpg", type=["jpg", "png"])
 
 
 image = None
@@ -100,36 +95,36 @@ if uploaded_file is not None:
     # file_details = {"Filename":uploaded_file.name,"FileType":uploaded_file.type,"FileSize":uploaded_file.size}
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     image = cv2.imdecode(file_bytes, 1)
-    st.image(image, channels="BGR", caption='Your uploaded image')
+    st.image(image, channels="BGR", caption='Ваше загруженное изображение')
 
     if scale == '8x' and image.shape[0] <= 128 and STREAMLIT==True:
-        st.error("Your image for the 8x scale is too big, because there is a shortage \
-             in terms of CPU, to solve this issue use GitHub codes on your own device or \
-            **plseae select another image or use another scale twice.**")
+        st.error("Ваше изображение для 8-кратного масштаба слишком велико, потому что его не хватает \
+             что касается процессора, то для решения этой проблемы используйте код GitHub на вашем собственном устройстве или \
+            **пожалуйста, дважды выберите другое изображение или используйте другой масштаб.**")
     elif scale == '4x' and image.shape[0] <= 200 and STREAMLIT==True:
-        st.error("Your image for the 4x scale is too big, because there is a shortage \
-             in terms of CPU, to solve this issue use GitHub codes on your own device or \
-            **plseae select another image or use another scale twice.**")  
+        st.error("Ваше изображение для 4-кратного масштаба слишком велико, потому что его не хватает \
+             что касается процессора, то для решения этой проблемы используйте код GitHub на вашем собственном устройстве или \
+            **пожалуйста, дважды выберите другое изображение или используйте другой масштаб.**")
     elif scale == '3x' and image.shape[0] <= 540 and STREAMLIT==True:
-        st.error("Your image for the 3x scale is too big, because there is a shortage \
-             in terms of CPU, to solve this issue use GitHub codes on your own device or \
-            **plseae select another image or use another scale twice.**")    
+        st.error("Ваше изображение для 3-кратного масштаба слишком велико, потому что его не хватает \
+             что касается процессора, то для решения этой проблемы используйте код GitHub на вашем собственном устройстве или \
+            **пожалуйста, дважды выберите другое изображение или используйте другой масштаб.**")   
     elif scale == '2x' and image.shape[0] <= 550 and STREAMLIT==True:
-        st.error("Your image for the 3x scale is too big, because there is a shortage \
-             in terms of CPU, to solve this issue use GitHub codes on your own device or \
-            **plseae select another image or use another scale twice.**")                                       
+        st.error("Ваше изображение для 2-кратного масштаба слишком велико, потому что его не хватает \
+             что касается процессора, то для решения этой проблемы используйте код GitHub на вашем собственном устройстве или \
+            **пожалуйста, дважды выберите другое изображение или используйте другой масштаб.**")                              
     else:
         left_column, right_column = st.columns(2)
         pressed = left_column.button('Upscale!')
 
         if pressed:
             pressed = False
-            st.info('Processing ...')
+            st.info('Обработка ...')
             result, save_path = upscale(
                 model_path, model_name, scale, image, uploaded_file.type)
-            st.success('Image is ready, you can download it now!')
+            st.success('Изображение готово, вы можете скачать его прямо сейчас!')
             st.balloons()
-            st.image(result, channels="RGB", caption='Your upscaled image')
+            st.image(result, channels="RGB", caption='Ваше увеличенное изображение')
             with open(save_path, 'rb') as f:
-                st.download_button('Download the image', f, file_name=scale +
+                st.download_button('Скачать изображение', f, file_name=scale +
                                    '_' + str(datetime.now()) + '_' + save_path)
